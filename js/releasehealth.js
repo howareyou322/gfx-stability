@@ -106,6 +106,7 @@ function addVersionToQueryURLs(release) {
 function getBugCounts(release) {
   for (var i = 0; i < bugQueries.length; i++) {
     var bugQuery = bugQueries[i];
+    bugQuery.url = bugQuery.url + "&chfield=%5BBug%20creation%5D&chfieldfrom=2016-06-01";
     $.ajax({
       url: BUGZILLA_REST_URL + bugQuery.url + '&count_only=1',
       bugQuery: bugQuery,
