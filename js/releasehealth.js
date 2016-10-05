@@ -28,12 +28,12 @@ function main(bzconfig) {
   var display = getDisplay();
   var version = getVersion(channel);
 
-  displayTitle(channel);
+  displayTitle("nightly");
   displayMeasures();
 
   if (display !== BIG_SCREEN) {
     displayForkOnGitHub();
-    displayChannelFooter(channel);
+    //    displayChannelFooter(channel);
   }
 
   addVersionToQueryURLs(version);
@@ -65,8 +65,18 @@ function getVersion(channel) {
   return versions[channel].version;
 }
 
+function getLastQuarter() {
+  var quarterAdjustment= (moment().month() % 3) + 1;
+  var lastQuarterEndDate = moment().subtract({ months: quarterAdjustment }).endOf('month');
+  var lastQuarterStartDate = lastQuarterEndDate.clone().subtract({ months: 2 }).startOf('month');
+
+  //  $("#body").append("<div class=\"bugcount\">"+ moment(lastQuarterStartDate).format('YYYY-MM-DD') + "</div>");
+  return moment(lastQuarterStartDate).format('YYYY-MM-DD');
+}
+
 function displayTitle(channel) {
-  $("#title").append(versions[channel].title + " "
+  $("#title").append(versions[channel].title
+                     + " "
                      + versions[channel].version);
   if (channel == "aurora" || channel == "nightly") {
     $("#title").attr("class", "title-light");
@@ -74,6 +84,7 @@ function displayTitle(channel) {
   }
   $("#title-img").attr("src",versions[channel].img);
   $("#header-bg").attr("class", "header-bg header-bg-" + channel);
+  $("#subtitle").append(getLastQuarter());
 }
 
 function displayMeasures() {
@@ -106,7 +117,7 @@ function addVersionToQueryURLs(release) {
 function getBugCounts(release) {
   for (var i = 0; i < bugQueries.length; i++) {
     var bugQuery = bugQueries[i];
-    bugQuery.url = bugQuery.url + "&chfield=%5BBug%20creation%5D&chfieldfrom=2016-06-01";
+    bugQuery.url = bugQuery.url + "&chfield=%5BBug%20creation%5D&chfieldfrom=" + getLastQuarter();
     $.ajax({
       url: BUGZILLA_REST_URL + bugQuery.url + '&count_only=1',
       bugQuery: bugQuery,
