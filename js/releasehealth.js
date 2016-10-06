@@ -32,8 +32,8 @@ function main(bzconfig) {
   displayMeasures();
 
   if (display !== BIG_SCREEN) {
-    displayForkOnGitHub();
-    //    displayChannelFooter(channel);
+    //displayForkOnGitHub();
+    displayChannelFooter(channel);
   }
 
   addVersionToQueryURLs(version);
@@ -102,7 +102,7 @@ function displayForkOnGitHub(){
 }
 
 function displayChannelFooter(channel) {
-  $("#body").append("<div id=\"footer\" class=\"footer-" + channel + "\">Channel &gt; <a href=\"?channel=release\">Release</a> | <a href=\"?channel=beta\">Beta</a> | <a href=\"?channel=aurora\">Developer Edition</a> | <a href=\"?channel=nightly\">Nightly</a></div>");
+  $("#body").append("<div id=\"footer\"> ?? fixed vs ?? open bugs </div>");
 }
 
 function addVersionToQueryURLs(release) {
