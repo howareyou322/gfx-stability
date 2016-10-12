@@ -27,17 +27,17 @@
     {
       "id": "gfxDiv",
       "title": "GFX general",
-      "url": "?keywords=crash%2C%20&classification=Components&query_format=advanced&emailassigned_to1=1&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=nobody%40mozilla.org&component=Graphics&product=Core&columnlist=product%2Ccomponent%2Cpriority%2Cassigned_to%2Cbug_status%2Cresolution%2Cshort_desc%2Ccf_crash_signature%2Cchangeddate"
+      "url": "?keywords_type=anywords&keywords=crash%2Cassertion%2C&classification=Components&query_format=advanced&emailassigned_to1=1&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=nobody%40mozilla.org&component=Graphics&product=Core"
     },
     {
       "id": "gfxlayerDiv",
       "title": "GFX Layers/ImageLib",
-      "url": "?keywords=crash%2C%20&classification=Components&query_format=advanced&emailassigned_to1=1&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=nobody%40mozilla.org&component=GFX%3A Color Management&component=Graphics%3A Layers&component=Graphics%3A Text&product=Core&columnlist=product%2Ccomponent%2Cpriority%2Cassigned_to%2Cbug_status%2Cresolution%2Cshort_desc%2Ccf_crash_signature%2Cchangeddate"
+      "url": "?keywords_type=anywords&keywords=crash%2Cassertion%2C&classification=Components&query_format=advanced&emailassigned_to1=1&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=nobody%40mozilla.org&component=GFX%3A Color Management&component=Graphics%3A Layers&component=Graphics%3A Text&product=Core"
     },
     {
       "id": "canvasDiv",
       "title": " Canvas 2D/WebGL",
-      "url": "?keywords=crash%2C%20&classification=Components&query_format=advanced&emailassigned_to1=1&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=nobody%40mozilla.org&component=Canvas%3A 2D&component=Canvas%3A WebGL&product=Core&columnlist=product%2Ccomponent%2Cpriority%2Cassigned_to%2Cbug_status%2Cresolution%2Cshort_desc%2Ccf_crash_signature%2Cchangeddate"
+      "url": "?keywords_type=anywords&keywords=crash%2Cassertion%2C&classification=Components&query_format=advanced&emailassigned_to1=1&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=nobody%40mozilla.org&component=Canvas%3A 2D&component=Canvas%3A WebGL&product=Core"
     }
   ],
   "refreshMinutes": 30

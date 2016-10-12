@@ -12,6 +12,8 @@ var BUGZILLA_REST_URL;
 var versions;
 var bugQueries;
 
+var BUGZILLA_COLUMN = "&columnlist=product%2Ccomponent%2Cpriority%2Cassigned_to%2Cbug_status%2Cshort_desc%2Cchangeddate%2Ccf_crash_signature";
+
 $(document).ready(function () {
   $.getJSON('js/bzconfig.json', function(data) {
     main(data);
@@ -92,8 +94,8 @@ function displayMeasures() {
     var query = bugQueries[i];
     $("#" + query.id).replaceWith("<div class=\"bugcount\"><h2>"
                                   + query.title + "</h2>"
-                                  + "<div id=\"data" + i + "\""
-                                  + " class=\"data greyedout\">?</div></div>");
+                                  + "<div id=\"priority" + i + "\" class=\"data greyedout\">? P1 / </div>"
+                                  + "<div id=\"data" + i + "\" class=\"data greyedout\">?</div></div>");
   }
 }
 
@@ -114,32 +116,58 @@ function addVersionToQueryURLs(release) {
   }
 }
 
-function getBugCounts(release) {
-  for (var i = 0; i < bugQueries.length; i++) {
-    var bugQuery = bugQueries[i];
-    bugQuery.url = bugQuery.url + "&chfield=%5BBug%20creation%5D&chfieldfrom=" + getLastQuarter();
-    $.ajax({
-      url: BUGZILLA_REST_URL + bugQuery.url + '&count_only=1',
-      bugQuery: bugQuery,
-      index: i,
-      crossDomain:true,
-      dataType: 'json',
-      ifModified: true,
-      success: function(data, status) {
+function queryBugCounts(index, bugQuery, priorityfilter) {
+  $.ajax({
+    url: BUGZILLA_REST_URL + bugQuery.url + '&count_only=1',
+        bugQuery: bugQuery,
+        index: index,
+        crossDomain:true,
+        dataType: 'json',
+        ifModified: true,
+        success: function(data, status) {
         if (status === 'success') {
           this.bugQuery.count = data.bug_count;
           displayCount(this.index, this.bugQuery.count,
-                       BUGZILLA_URL + this.bugQuery.url);
+                       BUGZILLA_URL + this.bugQuery.url, priorityfilter);
+          console.log(this.bugQuery.count);
         }
       },
-      error: function(jqXHR, textStatus, errorThrown) {
+        error: function(jqXHR, textStatus, errorThrown) {
         alert(textStatus);
       }
     });
+}
+
+function getBugCounts(release) {
+  for (var i = 0; i < bugQueries.length; i++) {
+    var bugQuery = bugQueries[i];
+    // TODO change to common query
+    // count for recently crashes
+    bugQuery.url = bugQuery.url
+      + BUGZILLA_COLUMN
+      + "&chfield=%5BBug%20creation%5D&chfieldfrom="
+      + getLastQuarter();
+    var priority = 0;
+    queryBugCounts(i, bugQuery, priority);
+    // count for P1 bugs
+    priority = 1;
+    bugQuery.url = bugQuery.url + "&priority=P1";
+    queryBugCounts(i, bugQuery, priority);
   }
 }
 
-function displayCount(index, count, url) {
-  $("#data" + index).replaceWith("<div class=\"data\"><a href=\"" + url
-                                 + "\">" + count + "</a></div>" );
+function displayCount(index, count, url ,priorityfilter) {
+  if (!priorityfilter) {
+        $("#data" + index).attr('class', 'data');
+        $("#data" + index).html('');
+        $("#data" + index).append("<div><a href=\"" + url +
+                                  "\">" + count + "</a></div>");
+  }
+  else {
+    $("#priority" + index).attr('class', 'data');
+    $("#priority" + index).html('');
+    $("#priority" + index).append("<div><a href=\"" + url +
+                                 "\">" + count + "</a> P1/ </div>");
+
+  }
 }
